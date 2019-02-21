@@ -1,0 +1,23 @@
+strings:
+  inputs: ${STRINGS}
+  filter: .+\.strings$
+  outputs:
+    - templateName: structured-swift4
+      output: ${LOCALIZATION}/Localization.swift
+xcassets:
+  inputs: ${ASSETS}
+  outputs:
+    - templateName: swift4
+      output: ${ASSETS_ROOT}/Assets.swift
+colors:
+  inputs: ${COLORS}
+  filter: .+\.clr$
+  outputs:
+    - templateName: swift4
+      output: ${COLORS_ROOT}/Colors.swift
+fonts:
+  inputs: ${FONTS}
+  filter: .+\.otf$
+  outputs:
+    - templateName: swift4
+      output: ${FONTS_ROOT}/Fonts.swift

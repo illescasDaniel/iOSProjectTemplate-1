@@ -1,0 +1,12 @@
+// - Errors
+// · UserDefaultsManager
+"**Errors.UserDefaultsManager.set.notAPropertyListObject**" = "UserDefaultsManager - \"%@\" is not a valid properyty list object type";
+"**Errors.UserDefaultsManager.retrieve.keyNotFound**" = "UserDefaultsManager - Key \"%@\" was not found";
+"**Errors.UserDefaultsManager.retrieve.couldNotCast**" = "UserDefaultsManager - Could not cast retrieved value (%@) to \"%@\"";
+// · Json
+"**Errors.Json.memberNotFound" = "Json - Member not found for key \"%@\"";
+"**Errors.Json.valueIsNotAnArray" = "Json - Value \"%@\" is not an array";
+//
+
+"**Test.Label**" = "Hi!!";
+"**Test.Label2**" = "Hi!";

@@ -8,14 +8,22 @@
 
 import UIKit
 
+import Peek
+@_exported import Async
+@_exported import SwiftyUtils
+@_exported import AppFolder
+@_exported import FontAwesome
+@_exported import Alamofire
+@_exported import Haptica
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		// Override point for customization after application launch.
+		self.setupPeek()
+		self.loadDefaultUserProperties()
 		return true
 	}
 
@@ -40,7 +48,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
-
-
+	
+	// MARK: - Convenience
+	
+	private func setupPeek() {
+		self.window?.peek.enabled = true
+	}
+	
+	// TODO: complete
+	private func loadDefaultUserProperties() {
+		UserDefaultsManager.standard.load(defaults: [
+			"isThingAEnabled": true,
+			"defaultUsername": "admin"
+		])
+	}
 }
 
