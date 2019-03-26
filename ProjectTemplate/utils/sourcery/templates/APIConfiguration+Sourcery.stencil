@@ -1,0 +1,68 @@
+{% macro caseVariable case %}let {{ v.localName }}{% endmacro %}
+{% macro caseParams case %}{% for v in case.associatedValues %}{% if v.localName %}{% call caseVariable case %}{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}{% endmacro %}
+
+{% macro definedCaseVariable case %}{{ v.localName }}: {{ v.typeName}}{% endmacro %}
+{% macro definedCaseParams case %}{% for v in case.associatedValues %}{% if v.localName %}{% call definedCaseVariable case %}{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}{% endmacro %}
+
+{% macro definedFunctionVariable case %}{{ v.localName }}: {{ v.localName}}{% endmacro %}
+{% macro definedFunctionParams case %}{% for v in case.associatedValues %}{% if v.localName %}{% call definedFunctionVariable case %}{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}{% endmacro %}
+
+{% for type in types.implementing.APIConfiguration|enum %}
+{{ type.accessLevel }} extension {{ type.name }} {
+    {{ type.accessLevel }} var baseURL: URLConvertible {
+        {% if type.annotations.url %}
+        return "{{ type.annotations.url }}"
+        {% else %}
+        fatalError("you have to specify a base url")
+        {% endif %}
+    }
+    {{ type.accessLevel }} var method: HTTPMethod {
+        switch self {
+            {% for case in type.cases %}
+            {% if case.annotations.method %}
+            case .{{ case.name }}: return .{{ case.annotations.method|lowercase }}
+            {% else %}
+            case .{{ case.name }}: return .get
+            {% endif %}
+            {% endfor %}
+        }
+    }
+    {{ type.accessLevel }} var path: String {
+        switch self {
+            {% for case in type.cases %}
+            {% if case.annotations.path %}
+            case .{{ case.name }}({% call caseParams case %}):
+                return "{{ case.annotations.path }}"
+            {% else %}
+            case .{{ case.name }}: return "/"
+            {% endif %}
+            {% endfor %}
+        }
+    }
+    {{ type.accessLevel }} var bodyParameters: Parameters? {
+        switch self {
+            {% for case in type.cases %}
+            {% if case.annotations.method == "POST" %}
+            case .{{ case.name }}({% call caseParams case %}):
+                return [
+                {% for associatedValue in case.associatedValues %}
+                    "{{ associatedValue.localName }}": {{ associatedValue.localName }}
+                {% endfor %}
+                ]
+            {% else %}
+            case .{{ case.name }}: return nil
+            {% endif %}
+            {% endfor %}
+        }
+    }
+}
+
+extension {{ type.name }}.ApiClient {
+    {% for case in type.cases|annotated:"response" %}
+    static func {{ case.name }}({% call definedCaseParams case %}) -> Future<Models.{{ case.annotations.response }}> {
+        return self.request(.{{ case.name }}({% call definedFunctionParams case %}))
+    }
+    {% endfor %}
+}
+
+{% endfor %}

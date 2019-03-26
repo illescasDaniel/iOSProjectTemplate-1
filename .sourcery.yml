@@ -1,0 +1,6 @@
+sources:
+  - ProjectTemplate
+templates:
+  - ProjectTemplate/utils/sourcery/templates
+output:
+  ProjectTemplate/utils/sourcery/

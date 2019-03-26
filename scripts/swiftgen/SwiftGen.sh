@@ -1,7 +1,6 @@
 #!/bin/sh
 
-#export PROJ_ROOT="../../TestProject1"
-export PROJ_ROOT="${SRCROOT}/TestProject1"
+export PROJ_ROOT="${SRCROOT}/ProjectTemplate"
 
 export RESOURCES="${PROJ_ROOT}/resources"
 

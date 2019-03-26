@@ -7,6 +7,7 @@
 	* [Haptica](https://github.com/efremidze/Hapticaofon)
 	* [SwiftyUtils](swiftyutils)
 	* [Peek](https://github.com/shaps80/Peek)
+	* [IBLocalizable](https://github.com/PiXeL16/IBLocalizable)
 	* [Periphery](https://github.com/peripheryapp/periphery)
 	* [Carthage](https://github.com/Carthage/Carthageperi)
 	* [SwiftGen](https://github.com/SwiftGen/SwiftGen)
