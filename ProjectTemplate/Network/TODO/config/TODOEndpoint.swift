@@ -14,7 +14,7 @@ extension TODO.Internal {
 	enum Endpoint: APIConfiguration {
 		typealias ApiClient = TODO.Internal.ApiClient
 		// sourcery: method = GET, path = "/todos", response = TODOResponse
-		case todos()
+		case todos
 		// sourcery: method = GET, path = "/posts/\(id)", response = TODOPostResponse
 		case todo(id: Int)
 	}

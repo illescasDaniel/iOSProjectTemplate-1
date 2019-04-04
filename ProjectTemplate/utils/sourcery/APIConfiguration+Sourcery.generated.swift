@@ -5,25 +5,33 @@
 
 
 
+import Foundation
+
 internal extension TODO.Internal.Endpoint {
-    internal var baseURL: URLConvertible {
+    var baseURL: URLConvertible {
         return "https://jsonplaceholder.typicode.com"
     }
-    internal var method: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
             case .todos: return .get
             case .todo: return .get
         }
     }
-    internal var path: String {
+    var path: String {
         switch self {
-            case .todos():
+            case .todos:
                 return "/todos"
             case .todo(let id):
                 return "/posts/\(id)"
         }
     }
-    internal var bodyParameters: Parameters? {
+    var queryItems: [URLQueryItem] {
+        switch self {
+			case .todos: return []
+			case .todo: return []
+        }
+    }
+    var bodyParameters: Parameters? {
         switch self {
             case .todos: return nil
             case .todo: return nil
@@ -33,7 +41,7 @@ internal extension TODO.Internal.Endpoint {
 
 extension TODO.Internal.Endpoint.ApiClient {
     static func todos() -> Future<Models.TODOResponse> {
-        return self.request(.todos())
+        return self.request(.todos)
     }
     static func todo(id: Int) -> Future<Models.TODOPostResponse> {
         return self.request(.todo(id: id))
